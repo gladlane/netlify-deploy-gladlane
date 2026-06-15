@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Processing Addendum — Gladlane</title>
+<meta name="robots" content="index,follow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 166 140' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='166' height='140' rx='32' fill='%23f8f5f0'/%3E%3Cpath d='M127.271 68.3589H124.75C132.313 54.4703 133.559 41.0214 126.641 32.8642C115.377 19.5765 86.6941 25.3665 62.5839 45.8146C54.3395 52.8066 47.7074 60.5974 42.988 68.3589H0C7.48222 55.8042 18.2036 43.1322 31.5851 31.7794C69.4505 -0.329232 114.293 -9.65182 131.756 10.9502C142.814 23.996 140.25 45.8952 127.271 68.3662V68.3589Z' fill='%231A192B'/%3E%3Cpath d='M165.856 71.649C158.373 84.2037 147.652 96.8757 134.271 108.228C101.161 136.313 62.7168 146.963 41.9044 135.412C38.9144 133.756 36.2909 131.645 34.107 129.065C23.0486 116.019 25.6135 94.1199 38.592 71.649H41.1129C33.5501 85.5376 32.3043 98.9864 39.2222 107.144C42.9303 111.512 48.5145 113.82 55.198 114.216C68.8506 115.037 87.0908 107.921 103.272 94.1932C108.548 89.7225 113.158 84.9219 117.042 80.0188C118.588 78.0473 117.225 75.1376 114.719 75.035L80.6199 73.6865L81.9024 71.649H165.863H165.856Z' fill='%231A192B'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --bg:#f8f5f0; --bg2:#f2ede6; --text:#1a1916; --text2:#6b6660;
+  --text3:#a09a93; --text4:#c4bdb5; --border:rgba(26,25,22,0.08);
+  --border2:rgba(26,25,22,0.14); --card:#fff;
+}
+html{ scroll-behavior:smooth; }
+body{
+  font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+body::after{
+  content:''; position:fixed; inset:0; z-index:9999; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+}
+body::before{
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:repeating-linear-gradient(to right,transparent,transparent 79px,rgba(26,25,22,0.028) 79px,rgba(26,25,22,0.028) 80px);
+  background-position:220px 0;
+}
+.topbar{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter:blur(16px) saturate(1.4);
+  background:rgba(248,245,240,0.82);
+  border-bottom:1px solid var(--border);
+}
+.topbar-inner{
+  max-width:880px; margin:0 auto; padding:18px 32px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.topbar-logo svg{ width:104px; height:auto; display:block; }
+.topbar a.back{
+  font-size:13px; color:var(--text2); text-decoration:none;
+  border:1px solid var(--border2); padding:9px 18px; transition:all .2s;
+}
+.topbar a.back:hover{ color:var(--text); border-color:var(--text3); background:var(--bg2); }
+main{ position:relative; z-index:1; max-width:880px; margin:0 auto; padding:72px 32px 96px; }
+.doc h1{
+  font-size:clamp(32px,5vw,46px); font-weight:500; letter-spacing:-0.03em;
+  line-height:1.08; margin-bottom:8px;
+}
+.doc h2{
+  font-size:21px; font-weight:500; letter-spacing:-0.015em;
+  margin:48px 0 14px; padding-top:28px; border-top:1px solid var(--border);
+}
+.doc h3{ font-size:16px; font-weight:500; margin:28px 0 8px; color:var(--text); }
+.doc p{ font-size:15.5px; color:var(--text2); margin:0 0 16px; }
+.doc strong{ color:var(--text); font-weight:500; }
+.doc em{ font-style:italic; }
+.doc a{ color:var(--text); text-decoration:underline; text-underline-offset:2px; }
+.doc ul{ margin:0 0 18px; padding-left:22px; }
+.doc li{ font-size:15.5px; color:var(--text2); margin-bottom:9px; }
+.doc hr{ border:none; border-top:1px solid var(--border); margin:44px 0; }
+.doc table{
+  width:100%; border-collapse:collapse; margin:20px 0 26px;
+  font-size:13.5px; background:var(--card); border:1px solid var(--border);
+}
+.doc th, .doc td{
+  text-align:left; padding:11px 14px; border-bottom:1px solid var(--border);
+  vertical-align:top; color:var(--text2);
+}
+.doc th{ background:var(--bg2); color:var(--text); font-weight:500; }
+.doc tr:last-child td{ border-bottom:none; }
+.doc h1 + p strong, .doc p:first-child strong{ color:var(--text); }
+.updated{ font-size:13px; color:var(--text3); margin-bottom:8px; }
+footer{
+  border-top:1px solid var(--border); padding:36px 32px; max-width:880px;
+  margin:0 auto; display:flex; align-items:center; justify-content:space-between;
+  position:relative; z-index:1;
+}
+.footer-logo svg{ width:84px; height:auto; display:block; opacity:.55; }
+.footer-links{ display:flex; gap:24px; list-style:none; }
+.footer-links a{ font-size:12px; color:var(--text3); text-decoration:none; transition:color .2s; }
+.footer-links a:hover{ color:var(--text2); }
+.footer-copy{ font-size:12px; color:var(--text4); font-weight:300; }
+@media(max-width:680px){
+  main{ padding:48px 22px 64px; }
+  .topbar-inner{ padding:16px 22px; }
+  footer{ flex-direction:column; gap:18px; text-align:center; padding:28px 22px; }
+  .footer-links{ flex-wrap:wrap; justify-content:center; gap:16px; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-logo" href="index.html" aria-label="Gladlane home"><svg viewBox="0 0 683 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Gladlane">
+<g clip-path="url(#cl)">
+<path d="M238.815 120.021C229.787 120.021 221.865 117.925 215.05 113.733C208.234 109.54 202.936 103.692 199.162 96.1868C195.38 88.6818 193.497 79.9969 193.497 70.1392C193.497 60.2816 195.41 51.582 199.235 44.0258C203.053 36.4768 208.491 30.5769 215.533 26.3407C222.583 22.1045 230.894 19.9864 240.472 19.9864C251.34 19.9864 260.39 22.6102 267.623 27.8651C274.849 33.1128 279.524 40.3466 281.642 49.5592H268.239C266.949 43.7546 263.886 39.1519 259.049 35.7439C254.212 32.3359 248.02 30.6282 240.464 30.6282C233.37 30.6282 227.2 32.2186 221.953 35.3921C216.706 38.5729 212.624 43.1096 209.729 49.0022C206.827 54.8948 205.376 61.9453 205.376 70.1392C205.376 78.3332 206.805 85.3837 209.656 91.2836C212.507 97.1762 216.471 101.713 221.535 104.894C226.599 108.075 232.498 109.658 239.218 109.658C249.529 109.658 257.319 106.638 262.567 100.606C267.814 94.5744 270.811 86.3072 271.551 75.8046H243.645V66.6873H283.43V118.365H272.79L271.822 102.475C268.319 108.097 264.04 112.421 258.976 115.462C253.912 118.504 247.184 120.021 238.808 120.021H238.815Z" fill="#1A192B"/>
+<path d="M292.833 118.365V18.8797H304.441V118.365H292.833Z" fill="#1A192B"/>
+<path d="M338.012 120.021C332.296 120.021 327.554 119.054 323.78 117.119C319.999 115.184 317.192 112.604 315.353 109.379C313.506 106.154 312.59 102.658 312.59 98.8766C312.59 91.8773 315.257 86.4904 320.6 82.7086C325.942 78.9341 333.219 77.0433 342.431 77.0433H360.942V76.2151C360.942 70.2272 359.374 65.6905 356.245 62.605C353.115 59.5194 348.924 57.973 343.669 57.973C339.155 57.973 335.264 59.1017 331.995 61.359C328.727 63.6164 326.675 66.9071 325.847 71.2386H313.968C314.429 66.2622 316.107 62.0773 319.009 58.6619C321.911 55.2539 325.524 52.6521 329.855 50.8565C334.186 49.0608 338.789 48.1594 343.669 48.1594C353.247 48.1594 360.458 50.7172 365.295 55.8256C370.132 60.9413 372.55 67.7353 372.55 76.2077V118.35H362.188L361.499 106.052C359.564 109.921 356.728 113.212 352.998 115.931C349.268 118.65 344.27 120.006 338.012 120.006V120.021ZM339.807 110.207C344.226 110.207 348.03 109.057 351.203 106.755C354.376 104.454 356.794 101.456 358.458 97.7699C360.114 94.0833 360.942 90.2209 360.942 86.1606V86.0214H343.398C336.583 86.0214 331.768 87.194 328.961 89.5467C326.147 91.892 324.748 94.8236 324.748 98.3196C324.748 101.816 326.059 104.791 328.683 106.953C331.306 109.115 335.015 110.2 339.807 110.2V110.207Z" fill="#1A192B"/>
+<path d="M412.761 120.021C405.945 120.021 399.98 118.453 394.865 115.323C389.757 112.193 385.793 107.913 382.986 102.475C380.172 97.0443 378.772 90.8659 378.772 83.9619C378.772 77.0579 380.201 70.9015 383.052 65.5146C385.902 60.1277 389.867 55.8915 394.931 52.806C399.995 49.7204 405.982 48.174 412.893 48.174C418.506 48.174 423.482 49.3247 427.813 51.626C432.144 53.9273 435.501 57.1521 437.897 61.3004V18.8797H449.505V118.365H439.003L437.897 107.034C435.684 110.354 432.511 113.344 428.363 116.019C424.215 118.687 419.012 120.028 412.753 120.028L412.761 120.021ZM413.999 109.936C418.601 109.936 422.683 108.851 426.223 106.689C429.77 104.527 432.533 101.508 434.511 97.6379C436.49 93.7682 437.479 89.2535 437.479 84.0938C437.479 78.9341 436.49 74.4194 434.511 70.5497C432.533 66.6799 429.762 63.6677 426.223 61.4983C422.676 59.3362 418.601 58.2515 413.999 58.2515C409.397 58.2515 405.454 59.3362 401.908 61.4983C398.361 63.6604 395.598 66.6799 393.619 70.5497C391.633 74.4194 390.651 78.9341 390.651 84.0938C390.651 89.2535 391.641 93.7682 393.619 97.6379C395.598 101.508 398.361 104.527 401.908 106.689C405.454 108.851 409.485 109.936 413.999 109.936Z" fill="#1A192B"/>
+<path d="M460.146 118.365V18.8797H471.754V118.365H460.146Z" fill="#1A192B"/>
+<path d="M505.325 120.021C499.609 120.021 494.867 119.054 491.093 117.119C487.319 115.184 484.505 112.604 482.666 109.379C480.826 106.154 479.903 102.658 479.903 98.8766C479.903 91.8773 482.57 86.4904 487.92 82.7086C493.262 78.9341 500.539 77.0433 509.751 77.0433H528.262V76.2151C528.262 70.2272 526.694 65.6905 523.565 62.605C520.428 59.5194 516.244 57.973 510.99 57.973C506.475 57.973 502.584 59.1017 499.316 61.359C496.047 63.6164 493.995 66.9071 493.167 71.2386H481.288C481.75 66.2622 483.428 62.0773 486.33 58.6619C489.232 55.2539 492.845 52.6521 497.176 50.8565C501.507 49.0608 506.109 48.1594 510.99 48.1594C520.568 48.1594 527.779 50.7172 532.615 55.8256C537.452 60.9339 539.871 67.7353 539.871 76.2077V118.35H529.508L528.819 106.052C526.885 109.921 524.056 113.212 520.319 115.931C516.588 118.65 511.591 120.006 505.332 120.006L505.325 120.021ZM507.12 110.207C511.539 110.207 515.343 109.057 518.516 106.755C521.696 104.454 524.115 101.456 525.771 97.7699C527.427 94.0833 528.255 90.2209 528.255 86.1606V86.0214H510.711C503.896 86.0214 499.081 87.194 496.274 89.5467C493.46 91.892 492.061 94.8236 492.061 98.3196C492.061 101.816 493.372 104.791 495.996 106.953C498.619 109.115 502.328 110.2 507.12 110.2V110.207Z" fill="#1A192B"/>
+<path d="M548.987 118.365V49.8304H559.488L560.177 62.1286C562.39 57.7971 565.563 54.3891 569.711 51.9045C573.859 49.42 578.557 48.174 583.804 48.174C591.909 48.174 598.38 50.6366 603.216 55.569C608.053 60.4942 610.471 68.0724 610.471 78.2965V118.365H598.863V79.5351C598.863 65.2581 592.964 58.1196 581.18 58.1196C575.281 58.1196 570.378 60.2597 566.465 64.5472C562.552 68.8347 560.595 74.9325 560.595 82.8552V118.365H548.987Z" fill="#1A192B"/>
+<path d="M650.528 120.021C643.984 120.021 638.187 118.526 633.123 115.528C628.052 112.538 624.073 108.368 621.171 103.025C618.269 97.6819 616.818 91.3716 616.818 84.0938C616.818 76.816 618.247 70.623 621.098 65.2361C623.948 59.8492 627.935 55.657 633.05 52.6594C638.158 49.6691 644.079 48.1667 650.807 48.1667C657.534 48.1667 663.17 49.6618 668.006 52.6594C672.843 55.657 676.551 59.5927 679.131 64.4739C681.71 69.355 683 74.61 683 80.2241C683 81.2428 682.978 82.2542 682.934 83.2656C682.89 84.277 682.868 85.4277 682.868 86.7176H628.294C628.572 91.9652 629.789 96.3187 631.951 99.778C634.113 103.23 636.832 105.839 640.107 107.583C643.376 109.335 646.849 110.207 650.536 110.207C655.321 110.207 659.329 109.101 662.554 106.895C665.778 104.681 668.123 101.691 669.596 97.9165H681.065C679.219 104.271 675.701 109.548 670.498 113.74C665.295 117.932 658.641 120.028 650.536 120.028L650.528 120.021ZM650.528 57.9803C645.003 57.9803 640.1 59.666 635.813 63.0227C631.533 66.3868 629.064 71.2899 628.419 77.7395H671.524C671.245 71.5684 669.127 66.7312 665.17 63.2353C661.213 59.732 656.325 57.9876 650.528 57.9876V57.9803Z" fill="#1A192B"/>
+<path d="M127.271 68.3589H124.75C132.313 54.4703 133.559 41.0214 126.641 32.8642C115.377 19.5765 86.6941 25.3665 62.5839 45.8146C54.3395 52.8066 47.7074 60.5974 42.988 68.3589H0C7.48222 55.8042 18.2036 43.1322 31.5851 31.7794C69.4505 -0.329232 114.293 -9.65182 131.756 10.9502C142.814 23.996 140.25 45.8952 127.271 68.3662V68.3589Z" fill="#1A192B"/>
+<path d="M165.856 71.649C158.373 84.2037 147.652 96.8757 134.271 108.228C101.161 136.313 62.7168 146.963 41.9044 135.412C38.9144 133.756 36.2909 131.645 34.107 129.065C23.0486 116.019 25.6135 94.1199 38.592 71.649H41.1129C33.5501 85.5376 32.3043 98.9864 39.2222 107.144C42.9303 111.512 48.5145 113.82 55.198 114.216C68.8506 115.037 87.0908 107.921 103.272 94.1932C108.548 89.7225 113.158 84.9219 117.042 80.0188C118.588 78.0473 117.225 75.1376 114.719 75.035L80.6199 73.6865L81.9024 71.649H165.863H165.856Z" fill="#1A192B"/>
+</g>
+<defs><clipPath id="cl"><rect width="683" height="140" fill="white"/></clipPath></defs>
+</svg></a>
+    <a class="back" href="index.html">&larr; Back to site</a>
+  </div>
+</div>
+<main>
+  <article class="doc">
+    <h1>GLADLANE DATA PROCESSING ADDENDUM</h1>
+    <p><strong>Version: 16 June 2026</strong></p>
+    <p>This Data Processing Addendum ("DPA") forms part of, and is subject to, the Gladlane Terms and Conditions or other written agreement between you ("Customer", "you" or "your") and Gladlane Limited ("Gladlane", "we", "us" or "our") governing your use of the Services (the "Agreement"). It applies to the extent Gladlane processes Personal Data on Customer's behalf in the course of providing the Services.</p>
+    <p>In the event of any conflict between this DPA and the Agreement in relation to the processing of Personal Data, this DPA prevails.</p>
+    <h2>1. Definitions</h2>
+    <p>Capitalised terms not defined here have the meaning given in the Agreement.</p>
+    <p>"Data Protection Laws" means all laws applicable to the processing of Personal Data under this DPA, including the UK GDPR, the Data Protection Act 2018, and, where applicable, the EU GDPR.</p>
+    <p>"UK GDPR", "Controller", "Processor", "Data Subject", "Personal Data", "Personal Data Breach", "processing" and "Sub-processor" have the meanings given in the Data Protection Laws.</p>
+    <p>"Customer Personal Data" means Personal Data contained within the Customer Data that Gladlane processes on Customer's behalf under the Agreement.</p>
+    <p>"Sub-processor" means any third party engaged by Gladlane to process Customer Personal Data.</p>
+    <h2>2. Roles and scope</h2>
+    <p>2.1 Roles. As between the parties, Customer is the Controller (or, where Customer itself acts as a processor for a third party, the processor) of Customer Personal Data, and Gladlane is the Processor (or sub-processor). Each party shall comply with its obligations under the Data Protection Laws.</p>
+    <p>2.2 Scope and details of processing. Gladlane processes Customer Personal Data only for the purpose of providing and supporting the Services. The subject matter, duration, nature and purpose of the processing, the types of Personal Data, and the categories of Data Subjects are set out in <strong>Annex A</strong>.</p>
+    <p>2.3 Customer responsibilities. Customer is responsible for the accuracy, quality and legality of Customer Personal Data and the means by which it acquired such data, and warrants that it has a valid lawful basis for the processing instructed under this DPA and the necessary rights to provide the data to Gladlane for processing.</p>
+    <h2>3. Processing instructions</h2>
+    <p>3.1 Gladlane shall process Customer Personal Data only on Customer's documented instructions, including as set out in this DPA and the Agreement and as necessary to provide the Services, unless required to do otherwise by applicable law (in which case Gladlane shall, where legally permitted, inform Customer of that requirement before processing).</p>
+    <p>3.2 Gladlane shall promptly inform Customer if, in its opinion, an instruction infringes the Data Protection Laws. Gladlane is not obliged to monitor Customer's compliance with the Data Protection Laws generally.</p>
+    <h2>4. Confidentiality</h2>
+    <p>Gladlane shall ensure that personnel authorised to process Customer Personal Data are subject to an appropriate duty of confidentiality and process the data only as instructed, and shall limit access to those personnel who need it to provide the Services.</p>
+    <h2>5. Security</h2>
+    <p>5.1 Gladlane shall implement and maintain appropriate technical and organisational measures to protect Customer Personal Data against accidental or unlawful destruction, loss, alteration, unauthorised disclosure or access, having regard to the state of the art, the costs of implementation, and the nature, scope and purposes of processing. A description of those measures is set out in <strong>Annex B</strong>.</p>
+    <p>5.2 Customer acknowledges that the measures in Annex B are appropriate as at the date of this DPA and that Gladlane may update them from time to time, provided the level of protection is not materially reduced.</p>
+    <h2>6. Use of Sub-processors</h2>
+    <p>6.1 General authorisation. Customer provides general authorisation for Gladlane to engage Sub-processors to process Customer Personal Data. The Sub-processors engaged as at the date of this DPA are listed in <strong>Annex C</strong>.</p>
+    <p>6.2 Sub-processor obligations. Gladlane shall impose on each Sub-processor, by written contract, data protection obligations no less protective than those in this DPA, and remains liable to Customer for the performance of each Sub-processor's obligations.</p>
+    <p>6.3 Changes. Gladlane shall give Customer notice (which may be by updating the list at Annex C or the published sub-processor list and notifying Customer) before adding or replacing a Sub-processor. Customer may reasonably object to a new Sub-processor on data protection grounds within fourteen (14) days of notice. The parties shall work in good faith to resolve the objection; if it cannot be resolved, Customer may terminate the affected Services.</p>
+    <p>6.4 AI Sub-processors. Gladlane shall ensure that any Sub-processor providing artificial-intelligence or machine-learning inference is contractually prohibited from using Customer Personal Data to train, fine-tune or improve generative or machine-learning models for the benefit of any other customer or third party, and from using Customer Personal Data for any purpose other than providing the contracted processing to Gladlane.</p>
+    <h2>7. Assistance to Customer</h2>
+    <p>7.1 Data Subject requests. Taking into account the nature of the processing, Gladlane shall assist Customer by appropriate technical and organisational measures, insofar as possible, in responding to requests from Data Subjects to exercise their rights under the Data Protection Laws. If Gladlane receives such a request directly, it shall, where legally permitted, promptly forward it to Customer and not respond except on Customer's instructions.</p>
+    <p>7.2 Compliance assistance. Gladlane shall provide reasonable assistance to Customer with data protection impact assessments, prior consultations with supervisory authorities, and Customer's obligations relating to security and Personal Data Breaches, taking into account the information available to Gladlane.</p>
+    <h2>8. Personal Data Breach</h2>
+    <p>Gladlane shall notify Customer without undue delay after becoming aware of a Personal Data Breach affecting Customer Personal Data, and shall provide Customer with information reasonably available to it to assist Customer in meeting its own breach-notification obligations. Such notification is not an acknowledgement of fault or liability.</p>
+    <h2>9. International transfers</h2>
+    <p>9.1 Gladlane and its Sub-processors may process Customer Personal Data outside the United Kingdom, including in the locations identified in Annex C.</p>
+    <p>9.2 Where Gladlane transfers Customer Personal Data to a country not subject to a UK adequacy decision, it shall ensure an appropriate transfer mechanism is in place, such as the UK International Data Transfer Addendum to the EU Standard Contractual Clauses, or the relevant provider's certification under an approved framework.</p>
+    <h2>10. Deletion and return</h2>
+    <p>On termination or expiry of the Agreement, Gladlane shall, at Customer's choice, delete or return Customer Personal Data, and delete existing copies, within thirty (30) days of a valid request, unless applicable law requires continued storage. Backup copies are deleted in accordance with Gladlane's standard backup cycle.</p>
+    <h2>11. Audits</h2>
+    <p>Gladlane shall make available to Customer information reasonably necessary to demonstrate compliance with this DPA and shall allow for and contribute to audits, including inspections, conducted by Customer or an auditor mandated by Customer, no more than once per year (unless required by a supervisory authority or following a Personal Data Breach), on reasonable prior notice, during business hours, and subject to confidentiality. Gladlane may satisfy this obligation by providing relevant third-party certifications or audit reports where available.</p>
+    <h2>12. Liability</h2>
+    <p>Each party's liability arising out of or related to this DPA is subject to the limitations and exclusions of liability set out in the Agreement.</p>
+    <h2>13. General</h2>
+    <p>13.1 This DPA is governed by the laws of England and Wales, and the parties submit to the exclusive jurisdiction of the English courts, unless the Agreement specifies otherwise.</p>
+    <p>13.2 Except as amended by this DPA, the Agreement remains in full force and effect.</p>
+    <p>13.3 Privacy queries and notices under this DPA may be sent to security@gladlane.com.</p>
+    <hr />
+    <h2>ANNEX A — Details of Processing</h2>
+    <p><strong>Subject matter:</strong> Provision of Gladlane's AI-native accounts payable platform and related support.</p>
+    <p><strong>Duration:</strong> For the term of the Agreement, plus the deletion/return period in clause 10.</p>
+    <p><strong>Nature and purpose of processing:</strong> Capturing, extracting, validating, matching, classifying and routing for approval supplier invoices and related financial documents; preparing payments and transmitting payment instructions to third-party payment providers where applicable; generating embeddings of Customer content for semantic search; providing AI-assisted automation; maintaining an audit trail; and providing security, support and the operation of the Services.</p>
+    <p><strong>Types of Personal Data:</strong>
+    - Account and user data: names, work email addresses, job titles, workspace identifiers, role and permission settings, authentication data, and usage and log data.
+    - Personal Data contained within Customer Data, which may include: names and contact details of individuals at suppliers; details of sole traders and other named individuals appearing on invoices, purchase orders, statements or contracts; and, where Customer manages payments through the Services, supplier bank and payment details.
+    - Embeddings derived from Customer content.</p>
+    <p><strong>Categories of Data Subjects:</strong>
+    - Customer's authorised users (for example, finance, accounts payable and approver users).
+    - Individuals whose Personal Data appears in the Customer Data processed through the Services (for example, supplier contacts and named individuals on financial documents).</p>
+    <hr />
+    <h2>ANNEX B — Technical and Organisational Measures</h2>
+    <p>Gladlane maintains measures including:</p>
+    <ul>
+    <li><strong>Encryption:</strong> encryption of Customer Personal Data in transit (TLS) and at rest.</li>
+    <li><strong>Access control:</strong> role-based access on a least-privilege basis; access to Customer Personal Data restricted to personnel and systems that need it to provide the Services; authentication controls, including multi-factor authentication where available.</li>
+    <li><strong>Network and infrastructure security:</strong> secure, reputable cloud infrastructure; network protections; and protection against common threats.</li>
+    <li><strong>Logging and monitoring:</strong> logging of relevant system and access events and monitoring for security purposes.</li>
+    <li><strong>Resilience and backups:</strong> measures to support availability and recovery of data, including backups.</li>
+    <li><strong>Secure development:</strong> secure software development practices and change management.</li>
+    <li><strong>Sub-processor management:</strong> due diligence on Sub-processors and contractual data protection obligations.</li>
+    <li><strong>Personnel:</strong> confidentiality obligations and security awareness for personnel with access to Customer Personal Data.</li>
+    <li><strong>Incident response:</strong> processes to detect, respond to and notify Personal Data Breaches.</li>
+    </ul>
+    <p>These measures may be updated over time provided the overall level of protection is not materially reduced.</p>
+    <hr />
+    <h2>ANNEX C — Sub-processors</h2>
+    <p>Gladlane engages the following Sub-processors. All are bound by data processing agreements requiring appropriate technical and organisational measures.</p>
+    <table>
+    <thead>
+    <tr>
+    <th>Sub-processor</th>
+    <th>Legal Entity</th>
+    <th>Country</th>
+    <th>Service / Purpose</th>
+    <th>Data Processed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Amazon Web Services</td>
+    <td>Amazon Web Services, Inc.</td>
+    <td>USA</td>
+    <td>Cloud infrastructure, compute, storage, and networking</td>
+    <td>All customer data processed by the platform</td>
+    </tr>
+    <tr>
+    <td>Anthropic</td>
+    <td>Anthropic, PBC</td>
+    <td>USA</td>
+    <td>AI model inference (Claude)</td>
+    <td>Prompts and content submitted to AI features</td>
+    </tr>
+    <tr>
+    <td>Clerk</td>
+    <td>Clerk, Inc.</td>
+    <td>USA</td>
+    <td>User authentication and identity management</td>
+    <td>Name, email address, authentication credentials</td>
+    </tr>
+    <tr>
+    <td>Cloudflare</td>
+    <td>Cloudflare, Inc.</td>
+    <td>USA</td>
+    <td>CDN, DDoS protection, and DNS</td>
+    <td>IP addresses, HTTP request metadata</td>
+    </tr>
+    <tr>
+    <td>Google (AI)</td>
+    <td>Google LLC</td>
+    <td>USA</td>
+    <td>AI model inference (Gemini)</td>
+    <td>Prompts and content submitted to AI features</td>
+    </tr>
+    <tr>
+    <td>OpenAI</td>
+    <td>OpenAI, LLC</td>
+    <td>USA</td>
+    <td>AI model inference (GPT series)</td>
+    <td>Prompts and content submitted to AI features</td>
+    </tr>
+    <tr>
+    <td>Render</td>
+    <td>Render Services, Inc.</td>
+    <td>USA</td>
+    <td>Application hosting and deployment infrastructure</td>
+    <td>All customer data processed by hosted services</td>
+    </tr>
+    <tr>
+    <td>Slack</td>
+    <td>Slack Technologies, LLC</td>
+    <td>USA</td>
+    <td>Internal team communication and notifications</td>
+    <td>Operational alerts and internal team data</td>
+    </tr>
+    <tr>
+    <td>turbopuffer</td>
+    <td>turbopuffer Inc.</td>
+    <td>Canada</td>
+    <td>Vector database and semantic search</td>
+    <td>Embeddings derived from customer content</td>
+    </tr>
+    </tbody>
+    </table>
+    <p><em>This list is updated periodically. Customers will be notified of material changes in accordance with clause 6.3.</em></p>
+    <p><em>Last updated: June 2026</em></p>
+  </article>
+</main>
+<footer>
+  <div class="footer-logo"><a href="index.html" aria-label="Gladlane home"><svg viewBox="0 0 683 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Gladlane">
+<g clip-path="url(#cl)">
+<path d="M238.815 120.021C229.787 120.021 221.865 117.925 215.05 113.733C208.234 109.54 202.936 103.692 199.162 96.1868C195.38 88.6818 193.497 79.9969 193.497 70.1392C193.497 60.2816 195.41 51.582 199.235 44.0258C203.053 36.4768 208.491 30.5769 215.533 26.3407C222.583 22.1045 230.894 19.9864 240.472 19.9864C251.34 19.9864 260.39 22.6102 267.623 27.8651C274.849 33.1128 279.524 40.3466 281.642 49.5592H268.239C266.949 43.7546 263.886 39.1519 259.049 35.7439C254.212 32.3359 248.02 30.6282 240.464 30.6282C233.37 30.6282 227.2 32.2186 221.953 35.3921C216.706 38.5729 212.624 43.1096 209.729 49.0022C206.827 54.8948 205.376 61.9453 205.376 70.1392C205.376 78.3332 206.805 85.3837 209.656 91.2836C212.507 97.1762 216.471 101.713 221.535 104.894C226.599 108.075 232.498 109.658 239.218 109.658C249.529 109.658 257.319 106.638 262.567 100.606C267.814 94.5744 270.811 86.3072 271.551 75.8046H243.645V66.6873H283.43V118.365H272.79L271.822 102.475C268.319 108.097 264.04 112.421 258.976 115.462C253.912 118.504 247.184 120.021 238.808 120.021H238.815Z" fill="#1A192B"/>
+<path d="M292.833 118.365V18.8797H304.441V118.365H292.833Z" fill="#1A192B"/>
+<path d="M338.012 120.021C332.296 120.021 327.554 119.054 323.78 117.119C319.999 115.184 317.192 112.604 315.353 109.379C313.506 106.154 312.59 102.658 312.59 98.8766C312.59 91.8773 315.257 86.4904 320.6 82.7086C325.942 78.9341 333.219 77.0433 342.431 77.0433H360.942V76.2151C360.942 70.2272 359.374 65.6905 356.245 62.605C353.115 59.5194 348.924 57.973 343.669 57.973C339.155 57.973 335.264 59.1017 331.995 61.359C328.727 63.6164 326.675 66.9071 325.847 71.2386H313.968C314.429 66.2622 316.107 62.0773 319.009 58.6619C321.911 55.2539 325.524 52.6521 329.855 50.8565C334.186 49.0608 338.789 48.1594 343.669 48.1594C353.247 48.1594 360.458 50.7172 365.295 55.8256C370.132 60.9413 372.55 67.7353 372.55 76.2077V118.35H362.188L361.499 106.052C359.564 109.921 356.728 113.212 352.998 115.931C349.268 118.65 344.27 120.006 338.012 120.006V120.021ZM339.807 110.207C344.226 110.207 348.03 109.057 351.203 106.755C354.376 104.454 356.794 101.456 358.458 97.7699C360.114 94.0833 360.942 90.2209 360.942 86.1606V86.0214H343.398C336.583 86.0214 331.768 87.194 328.961 89.5467C326.147 91.892 324.748 94.8236 324.748 98.3196C324.748 101.816 326.059 104.791 328.683 106.953C331.306 109.115 335.015 110.2 339.807 110.2V110.207Z" fill="#1A192B"/>
+<path d="M412.761 120.021C405.945 120.021 399.98 118.453 394.865 115.323C389.757 112.193 385.793 107.913 382.986 102.475C380.172 97.0443 378.772 90.8659 378.772 83.9619C378.772 77.0579 380.201 70.9015 383.052 65.5146C385.902 60.1277 389.867 55.8915 394.931 52.806C399.995 49.7204 405.982 48.174 412.893 48.174C418.506 48.174 423.482 49.3247 427.813 51.626C432.144 53.9273 435.501 57.1521 437.897 61.3004V18.8797H449.505V118.365H439.003L437.897 107.034C435.684 110.354 432.511 113.344 428.363 116.019C424.215 118.687 419.012 120.028 412.753 120.028L412.761 120.021ZM413.999 109.936C418.601 109.936 422.683 108.851 426.223 106.689C429.77 104.527 432.533 101.508 434.511 97.6379C436.49 93.7682 437.479 89.2535 437.479 84.0938C437.479 78.9341 436.49 74.4194 434.511 70.5497C432.533 66.6799 429.762 63.6677 426.223 61.4983C422.676 59.3362 418.601 58.2515 413.999 58.2515C409.397 58.2515 405.454 59.3362 401.908 61.4983C398.361 63.6604 395.598 66.6799 393.619 70.5497C391.633 74.4194 390.651 78.9341 390.651 84.0938C390.651 89.2535 391.641 93.7682 393.619 97.6379C395.598 101.508 398.361 104.527 401.908 106.689C405.454 108.851 409.485 109.936 413.999 109.936Z" fill="#1A192B"/>
+<path d="M460.146 118.365V18.8797H471.754V118.365H460.146Z" fill="#1A192B"/>
+<path d="M505.325 120.021C499.609 120.021 494.867 119.054 491.093 117.119C487.319 115.184 484.505 112.604 482.666 109.379C480.826 106.154 479.903 102.658 479.903 98.8766C479.903 91.8773 482.57 86.4904 487.92 82.7086C493.262 78.9341 500.539 77.0433 509.751 77.0433H528.262V76.2151C528.262 70.2272 526.694 65.6905 523.565 62.605C520.428 59.5194 516.244 57.973 510.99 57.973C506.475 57.973 502.584 59.1017 499.316 61.359C496.047 63.6164 493.995 66.9071 493.167 71.2386H481.288C481.75 66.2622 483.428 62.0773 486.33 58.6619C489.232 55.2539 492.845 52.6521 497.176 50.8565C501.507 49.0608 506.109 48.1594 510.99 48.1594C520.568 48.1594 527.779 50.7172 532.615 55.8256C537.452 60.9339 539.871 67.7353 539.871 76.2077V118.35H529.508L528.819 106.052C526.885 109.921 524.056 113.212 520.319 115.931C516.588 118.65 511.591 120.006 505.332 120.006L505.325 120.021ZM507.12 110.207C511.539 110.207 515.343 109.057 518.516 106.755C521.696 104.454 524.115 101.456 525.771 97.7699C527.427 94.0833 528.255 90.2209 528.255 86.1606V86.0214H510.711C503.896 86.0214 499.081 87.194 496.274 89.5467C493.46 91.892 492.061 94.8236 492.061 98.3196C492.061 101.816 493.372 104.791 495.996 106.953C498.619 109.115 502.328 110.2 507.12 110.2V110.207Z" fill="#1A192B"/>
+<path d="M548.987 118.365V49.8304H559.488L560.177 62.1286C562.39 57.7971 565.563 54.3891 569.711 51.9045C573.859 49.42 578.557 48.174 583.804 48.174C591.909 48.174 598.38 50.6366 603.216 55.569C608.053 60.4942 610.471 68.0724 610.471 78.2965V118.365H598.863V79.5351C598.863 65.2581 592.964 58.1196 581.18 58.1196C575.281 58.1196 570.378 60.2597 566.465 64.5472C562.552 68.8347 560.595 74.9325 560.595 82.8552V118.365H548.987Z" fill="#1A192B"/>
+<path d="M650.528 120.021C643.984 120.021 638.187 118.526 633.123 115.528C628.052 112.538 624.073 108.368 621.171 103.025C618.269 97.6819 616.818 91.3716 616.818 84.0938C616.818 76.816 618.247 70.623 621.098 65.2361C623.948 59.8492 627.935 55.657 633.05 52.6594C638.158 49.6691 644.079 48.1667 650.807 48.1667C657.534 48.1667 663.17 49.6618 668.006 52.6594C672.843 55.657 676.551 59.5927 679.131 64.4739C681.71 69.355 683 74.61 683 80.2241C683 81.2428 682.978 82.2542 682.934 83.2656C682.89 84.277 682.868 85.4277 682.868 86.7176H628.294C628.572 91.9652 629.789 96.3187 631.951 99.778C634.113 103.23 636.832 105.839 640.107 107.583C643.376 109.335 646.849 110.207 650.536 110.207C655.321 110.207 659.329 109.101 662.554 106.895C665.778 104.681 668.123 101.691 669.596 97.9165H681.065C679.219 104.271 675.701 109.548 670.498 113.74C665.295 117.932 658.641 120.028 650.536 120.028L650.528 120.021ZM650.528 57.9803C645.003 57.9803 640.1 59.666 635.813 63.0227C631.533 66.3868 629.064 71.2899 628.419 77.7395H671.524C671.245 71.5684 669.127 66.7312 665.17 63.2353C661.213 59.732 656.325 57.9876 650.528 57.9876V57.9803Z" fill="#1A192B"/>
+<path d="M127.271 68.3589H124.75C132.313 54.4703 133.559 41.0214 126.641 32.8642C115.377 19.5765 86.6941 25.3665 62.5839 45.8146C54.3395 52.8066 47.7074 60.5974 42.988 68.3589H0C7.48222 55.8042 18.2036 43.1322 31.5851 31.7794C69.4505 -0.329232 114.293 -9.65182 131.756 10.9502C142.814 23.996 140.25 45.8952 127.271 68.3662V68.3589Z" fill="#1A192B"/>
+<path d="M165.856 71.649C158.373 84.2037 147.652 96.8757 134.271 108.228C101.161 136.313 62.7168 146.963 41.9044 135.412C38.9144 133.756 36.2909 131.645 34.107 129.065C23.0486 116.019 25.6135 94.1199 38.592 71.649H41.1129C33.5501 85.5376 32.3043 98.9864 39.2222 107.144C42.9303 111.512 48.5145 113.82 55.198 114.216C68.8506 115.037 87.0908 107.921 103.272 94.1932C108.548 89.7225 113.158 84.9219 117.042 80.0188C118.588 78.0473 117.225 75.1376 114.719 75.035L80.6199 73.6865L81.9024 71.649H165.863H165.856Z" fill="#1A192B"/>
+</g>
+<defs><clipPath id="cl"><rect width="683" height="140" fill="white"/></clipPath></defs>
+</svg></a></div>
+  <ul class="footer-links">
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="terms.html">Terms</a></li>
+    <li><a href="data-processing-addendum.html">DPA</a></li>
+    <li><a href="mailto:security@gladlane.com">Security</a></li>
+    <li><a href="mailto:security@gladlane.com">Contact</a></li>
+  </ul>
+  <span class="footer-copy">&copy; 2026 Gladlane. All rights reserved.</span>
+</footer>
+</body>
+</html>
